@@ -239,7 +239,7 @@ div#menu ul.sheets li.active {
 }
 .castle table, .dialog-floating table {
 	width : 100%;
-	table-layout : fixed;
+	/* table-layout : fixed; don't want layout fixed */
 	background-color : white;
 	border-collapse : collapse;
 	border-spacing : 0;
@@ -365,6 +365,7 @@ div#menu ul.sheets li.active {
 	-moz-user-select : none;
 	-webkit-user-select : none;
 	border-left : 1px solid #CCC;
+	white-space : nowrap; /* no wrapping in cells */
 }
 .castle td.t_tilepos, .dialog-floating td.t_tilepos {
 	text-align : center;
