@@ -1310,13 +1310,14 @@ class Main extends Model {
 	}
 
 	function refresh() {
-		var t = J("<table>");
+		var t = J('<table id="' +viewSheet.name + '">');
 		checkCursor = true;
 		fillTable(t, viewSheet);
 		if( cursor.s != viewSheet && checkCursor ) setCursor(viewSheet,false);
 		var content = J("#content");
 		content.empty();
 		t.appendTo(content);
+		makeTableResizable(t);
 		J("<div>").appendTo(content).addClass("tableBottom");
 		updateCursor();
 	}
@@ -1439,6 +1440,15 @@ class Main extends Model {
 
 			default :
 		}
+	}
+
+	function makeTableResizable( t: JQuery ) {
+		(untyped t).colResizable({
+			resizeMode: 'fit',
+			liveDrag: true,
+			postbackSafe: true,
+			partialRefresh: true
+		});
 	}
 
 	function fillTable( content : JQuery, sheet : Sheet ) {
@@ -1576,7 +1586,10 @@ class Main extends Model {
 						var div = J("<div>").appendTo(cell);
 						if( !inTodo )
 							div.hide();
-						var content = J("<table>").appendTo(div);
+						var regex = ~/@/g;
+						var id = regex.replace(sheet.name, "_");
+						var t = J('<table id="' + id + '">');
+						var content = t.appendTo(div);
 						var psheet = sheet.getSub(c);
 						if( val == null ) {
 							val = [];
@@ -1615,6 +1628,7 @@ class Main extends Model {
 							div.slideDown(100);
 							setCursor(psheet);
 						}
+						makeTableResizable(t);
 						e.stopPropagation();
 					});
 					if( openedList.get(key) )
