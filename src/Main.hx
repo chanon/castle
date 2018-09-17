@@ -31,6 +31,7 @@ private typedef Cursor = {
 }
 
 class K {
+	public static inline var BACKSPACE = 8;
 	public static inline var INSERT = 45;
 	public static inline var DELETE = 46;
 	public static inline var LEFT = 37;
@@ -215,7 +216,7 @@ class Main extends Model {
 				newLine(cursor.s, cursor.y);
 				moveCursor(0, 1, false, false);
 			}
-		case K.DELETE if( inCDB ):
+		case K.DELETE | K.BACKSPACE if( inCDB ):
 			J(".selected.deletable").change();
 			if( cursor.s != null ) {
 				if( cursor.s.props.isProps ) {
