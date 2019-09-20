@@ -74,6 +74,8 @@ class Main extends Model {
 
 	var macEditMenu : MenuItem;
 
+	var fixedLayout : Bool;
+
 	function new() {
 		super();
 		window = js.node.webkit.Window.get();
@@ -83,6 +85,7 @@ class Main extends Model {
 		levels = [];
 		mousePos = { x : 0, y : 0 };
 		sheetCursors = new Map();
+		fixedLayout = true;
 		window.window.addEventListener("keydown", onKey);
 		window.window.addEventListener("keypress", onKeyPress);
 		window.window.addEventListener("keyup", onKeyUp);
@@ -1518,6 +1521,13 @@ class Main extends Model {
 			return;
 		}
 
+		if (fixedLayout) {
+			content.css("table-layout", "fixed");
+		}
+		else {
+			content.css("table-layout", "auto");
+		}
+
 		var todo = [];
 		var inTodo = false;
 		var cols = J("<tr>").addClass("head");
@@ -2597,6 +2607,7 @@ class Main extends Model {
 				J("table").css("table-layout", "fixed");
 			else
 				J("table").css("table-layout", "auto");
+			fixedLayout = mfixed.checked;
 		}
 		mfixed.checked = true;
 
