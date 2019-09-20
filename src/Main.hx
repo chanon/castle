@@ -2456,6 +2456,8 @@ class Main extends Model {
 			base.compress = mcompress.checked;
 			save();
 		};
+		var mfixed = new MenuItem( { label : "Fixed Table Layout", type: MenuItemType.checkbox } );
+		mfixed.checked = true;
 		var mabout = new MenuItem( { label : "About" } );
 		var mexit = new MenuItem( { label : "Exit", key : "Q", modifiers : modifier } );
 		var mdebug = new MenuItem( { label : "Dev" } );
@@ -2519,7 +2521,7 @@ class Main extends Model {
 		}
 		mrecent.submenu = mrecents;
 
-		for( m in [mnew, mopen, mrecent, msave, mclean, mcompress, mexport, mabout, mexit] )
+		for( m in [mnew, mopen, mrecent, msave, mclean, mcompress, mexport, mfixed, mabout, mexit] )
 			mfiles.append(m);
 		mfile.submenu = mfiles;
 
@@ -2550,6 +2552,14 @@ class Main extends Model {
 			menu.append(mfile);
 			menu.append(mdebug);
 		}
+
+		mfixed.click = function() {
+			if (mfixed.checked)
+				J("table").css("table-layout", "fixed");
+			else
+				J("table").css("table-layout", "auto");
+		}
+		mfixed.checked = true;
 
 		window.menu = menu;
 		if( prefs.windowPos.x > 0 && prefs.windowPos.y > 0 ) window.moveTo(prefs.windowPos.x, prefs.windowPos.y);
